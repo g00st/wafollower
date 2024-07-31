@@ -35,9 +35,9 @@ class miniprj(Node):
         self.action_server_ = ActionServer(self, Start, 'start', self.Action_callback)
 
         self.target_distance_ = 0.3
-        walleft = False
-
-        if walleft:
+        self.walleft = True
+        
+        if self.walleft:
             self.angelefront = 225
             self.angeleback = 315
             self.anglemiddle = 270
@@ -111,7 +111,10 @@ class miniprj(Node):
                 self.vel_publisher_.publish(msg)
             else:
                 msg = Twist()
-                msg.angular.z = -0.2
+                if self.walleft:
+                     msg.angular.z = 0.2
+                else:    
+                    msg.angular.z = -0.2
                 self.vel_publisher_.publish(msg)
 
     def follow_wall(self):
